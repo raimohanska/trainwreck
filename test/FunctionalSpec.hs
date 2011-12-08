@@ -2,7 +2,7 @@ module FunctionalSpec where
 
 import Snap.Http.Server.Config
 import Test.HUnit
-import qualified Main as Main
+import qualified ConstantReply as Main
 import Util.HttpTester
 
 functionalTests = wrapTest withTestServer $ TestList [
