@@ -4,7 +4,6 @@ import Snap.Http.Server.Config
 import Test.HUnit
 import Control.Concurrent(forkIO, threadDelay, killThread)
 import qualified Util.HttpClient as HTTP
-import Network.Curl(curlGetString)
 import Text.Regex.XMLSchema.String(match)
 import Control.Exception(finally)
 
