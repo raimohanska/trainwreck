@@ -2,13 +2,11 @@ module Util.HttpTester where
 
 import Snap.Http.Server.Config
 import Test.HUnit
-import qualified Main as Main
 import Control.Concurrent(forkIO, threadDelay, killThread)
-import Util.Curl
+import qualified Util.HttpClient as HTTP
 import Network.Curl(curlGetString)
 import Text.Regex.XMLSchema.String(match)
 import Control.Exception(finally)
-import Util.RegexEscape(escape)
 
 wrapTest :: Wrapper -> Test -> Test
 wrapTest wrapper (TestCase a) = TestCase $ wrapper a
@@ -20,10 +18,11 @@ data ExpectedResult = Matching String | Exactly String | ReturnCode Int | All [E
 type Wrapper = IO () -> IO ()
 
 post desc root path request expected = 
-  httpTest desc (curlPostGetString (root ++ path) request) expected
+  httpTest desc (HTTP.post (root ++ path) request) expected
 
 get desc root path expected = 
-  httpTest desc (curlGetGetString (root ++ path)) expected
+  httpTest desc (HTTP.get (root ++ path)) expected
+
 
 httpTest :: String -> IO (Int, String) -> ExpectedResult -> Test
 httpTest desc request expected = TestLabel desc $ TestCase $ do
